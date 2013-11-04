@@ -16,7 +16,7 @@ module Elaine
       def run
         DCell.start id: node_id, addr: "tcp://#{options[:ip]}:#{options[:port]}", registry: {adapter: 'redis', host: options[:redis_registry]}
 
-        Elaine::Distributed::Worker.supervise_as :worker, coordinator_node: coordinator_node
+        Elaine::Distributed::Worker.supervise_as :worker, coordinator_node: options[:coordinator_node]
         Elaine::Distributed::PostOffice.supervise_as :postoffice
         sleep
       end
