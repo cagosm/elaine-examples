@@ -1,20 +1,20 @@
 require 'thor'
-require 'dcell'
-
-require 'elaine/examples/triad_census_vertex'
 
 module Elaine
   module Examples
     class TriadCensusCLI < Thor
 
-      desc "run", "Run the triad census"
-      option :name, type: :string, required: true, "The name of this node."
-      option :ip, type: :string, required: true, "The ip address to run this node on."
-      option :port, type: :numeric, required: true, "The port for this node"
-      option :coordinator, type: :string, required: true, "The coordinator node to run the job on."
-      option :redis_registery, type: :string, required: true, "The host of the redis server that we will register with."
-      option :graph, type: :string, required: true, "The graph to load (egonets)."
-      def run
+      desc "start", "Run the triad census"
+      option :name, type: :string, required: true, desc: "The name of this node."
+      option :ip, type: :string, required: true, desc: "The ip address to run this node on."
+      option :port, type: :numeric, required: true, desc: "The port for this node"
+      option :coordinator, type: :string, required: true, desc: "The coordinator node to run the job on."
+      option :redis_registry, type: :string, required: true, desc: "The host of the redis server that we will register with."
+      option :graph, type: :string, required: true, desc: "The graph to load (egonets)."
+      def start
+        require 'dcell'
+        require 'elaine/examples/triad_census_vertex'
+
         DCell.start id: options[:name], addr: "tcp://#{options[:ip]}:#{options[:port]}", registry: {adapter: 'redis', host: options[:redis_registry]}
 
         graph_to_load = options[:graph]
