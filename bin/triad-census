@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'elaine/examples/triad__cli'
+require 'elaine/examples/triad_census_cli'
 
 Elaine::Examples::TriadCensusCLI.start
 
