@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'elaine/examples/triad_census_coordinator_cli'
+
+Elaine::Examples::TriadCensusCoordinatorCLI.start
