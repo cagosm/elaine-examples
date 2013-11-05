@@ -17,15 +17,13 @@ module Elaine
       def compute
         # puts "Working on supserstep: #{superstep}"
         if superstep == 1
-          # if id == :n_1
             logger.info "Super step 1: #{id}"
             neighborhood = []
             @outedges.each do |e|
               neighborhood << e
             end
-            # @outedges.each 
+
             msg = {source: id, neighborhood: neighborhood}
-            # deliver_to_all_neighbors(msg)
             my_numeric_id = id.to_s.split("_")[1].to_i 
             @outedges.each do |e|
               their_numeric_id = e.to_s.split("_")[1].to_i 
@@ -33,20 +31,11 @@ module Elaine
                 deliver(e, msg)
               end
             end
-
-            # @outedges.each do |e|
-            #   future = Celluloid::Actor[:postoffice].future(:deliver, e, msg)
-            #   future.value
-            # end
-          # end
         elsif superstep == 2
           logger.info "Super step 2: #{id}"
-          # sum = messages.inject(0) {|total,msg| total += msg; total }
-          # sum = messages.reduce(0, :+)
+
           u = id.to_s.split("_")[1].to_i 
           messages.each do |msg|
-            # msg = JSON.parse(msg_json, symbolize_names: true)
-            # raise "Got an out-of-step message! current superstep: #{superstep}, message from superstep: #{msg[:superstep]}" if msg[:superstep] != (superstep - 1)  
             v = sym_id_to_i msg[:source]
             if u < v
               type3s = (@outedges & msg[:neighborhood]).select { |neighbor| v < neighbor.to_s.split("_")[1].to_i }
@@ -65,7 +54,8 @@ module Elaine
                 end
               end
 
-              # it would be nice to do this locally...
+              # it would be nice to do this locally without knowledge of the
+              # size of the graph
               @value[:type1] += @value[:n] - ((@outedges | msg[:neighborhood]).size)
             end
           end
@@ -74,8 +64,6 @@ module Elaine
           logger.info "Voting to stop"
           vote_to_stop
         end
-
-        
       end
     end
 
